@@ -26,9 +26,9 @@ class AudioDetector(Node):
         self.__listen_thread = None
         self._model = yamnet_model.yamnet_frames_model(params)
         self._model.load_weights(
-            '/home/irene/galactic_ws/src/audio_detection/audio_detection/yamnet.h5')
+            '/home/irene/galactic_ws/src/yamnet_ros2/audio_detection/audio_detection/yamnet.h5')
         self._classes = yamnet_model.class_names(
-            '/home/irene/galactic_ws/src/audio_detection/audio_detection/yamnet_class_map.csv')
+            '/home/irene/galactic_ws/src/yamnet_ros2/audio_detection/audio_detection/yamnet_class_map.csv')
 
         #started_param_name = "started"
         self.started = False
