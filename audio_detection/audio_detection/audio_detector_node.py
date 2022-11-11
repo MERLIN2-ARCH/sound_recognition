@@ -31,7 +31,7 @@ class AudioDetector(Node):
             '/home/irene/galactic_ws/src/yamnet_ros2/audio_detection/audio_detection/yamnet_class_map.csv')
 
         #started_param_name = "started"
-        self.started = False
+        self.started = True
         #self.declare_parameter(started_param_name, True)
 
         # self.started = self.get_parameter(
@@ -81,9 +81,11 @@ class AudioDetector(Node):
             #self.get_logger().info("... a "+top1.data)
 
             # if is a doorbell
-            if top1.data in class_acepted:
-                self.__pub.publish(top1)
-                # self._stop_ad()
+            # if top1.data in class_acepted:
+            # self.__pub.publish(top1)
+            # self._stop_ad()
+
+            self.__pub.publish(top1)
 
     def __listen_thread_cb(self):
         """ thread callback to listen """

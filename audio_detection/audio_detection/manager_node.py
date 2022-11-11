@@ -24,11 +24,11 @@ class ManagerNode(Node):
             Empty, "stop_ad_listening")
 
         # sub
-        self.__subscription = self.create_subscription(
+        """ self.__subscription = self.create_subscription(
             String,
             "audio_detected",
             self.__ad_callback,
-            10)
+            10) """
 
         # action server
         self.__action_server = self.create_action_server(
@@ -48,7 +48,7 @@ class ManagerNode(Node):
 
         if not self.doorbell:
             self.get_logger().info("doorbell")
-            self.doorbell = True
+            #self.doorbell = True
 
     def start_ad(self):
         """ start ad method """
