@@ -16,7 +16,7 @@ $ pip3 install numpy resampy tensorflow soundfile
 $ cd ~/ros2_ws/src
 $ git clone git@github.com:uleroboticsgroup/simple_node.git
 $ git clone git@github.com:igonzf06/yamnet_ros2.git
-$ cd audio_detection
+$ cd yamnet_ros2
 $ pip3 install -r requirements.txt
 $ cd ~/ros2_ws
 $ colcon build
@@ -37,7 +37,9 @@ $ ros2 action send_goal /audio_detection/listen_doorbell audio_detection_interfa
 ## Services
 
 * Service to start de doorbell detection:
+
 service: /audio_detection/start_ad_listening
+
 type: std_srvs/srv/Empty
 
 ```shell
@@ -45,7 +47,9 @@ $ ros2 service call /audio_detection/start_ad_listening std_srvs/srv/Empty
 ```
 
 * Service to stop de doorbell detection:
+
 service: /audio_detection/stop_ad_listening
+
 type: std_srvs/srv/Empty
 
 ```shell
