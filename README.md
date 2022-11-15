@@ -16,8 +16,6 @@ $ pip3 install numpy resampy tensorflow soundfile
 $ cd ~/ros2_ws/src
 $ git clone git@github.com:uleroboticsgroup/simple_node.git
 $ git clone git@github.com:igonzf06/yamnet_ros2.git
-$ cd yamnet_ros2
-$ pip3 install -r requirements.txt
 $ cd ~/ros2_ws
 $ colcon build
 ```
