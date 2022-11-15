@@ -172,7 +172,7 @@ index,mid,display_name
 170,/m/05r5wn,Rattle (instrument)
 171,/m/0xzly,Maraca
 172,/m/0mbct,Gong
-173,/m/016622,Tubular bells
+173,/m/016622,Tubular_bells
 174,/m/0j45pbj,Mallet percussion
 175,/m/0dwsp,"Marimba, xylophone"
 176,/m/0dwtp,Glockenspiel
@@ -474,7 +474,7 @@ index,mid,display_name
 472,/m/07plct2,Crushing
 473,/t/dd00112,"Crumpling, crinkling"
 474,/m/07qcx4z,Tearing
-475,/m/02fs_r,"Beep, bleep"
+475,/m/02fs_r,"Beepbleep"
 476,/m/07qwdck,Ping
 477,/m/07phxs1,Ding
 478,/m/07rv4dm,Clang

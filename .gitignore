@@ -2,3 +2,4 @@ audio_detection/test
 audio_detection/.vscode
 audio_detection/audio_detection/__pycache__
 audio_detection/audio_detection/yamnet
+.vscode/settings.json
