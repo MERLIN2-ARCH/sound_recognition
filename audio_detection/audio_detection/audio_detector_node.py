@@ -11,7 +11,7 @@ from rclpy.node import Node
 
 from std_msgs.msg import String
 from std_srvs.srv import Empty
-from speech_to_text.custom_thread import CustomThread
+from audio_detection.custom_thread import CustomThread
 
 class_acepted = ['Doorbell', 'Bell', 'Ding-dong',
                  'Tubular bells', 'Reversing beeps', 'Beep, bleep']
