@@ -1,6 +1,6 @@
 # YAMNet_ros2
 
-This repo constains code for sound classification (like doorbell detection) under ROS 2 (Galactic) architecture using the YAMNet pretrained deep net that predicts 521 audio event classes based on the AudioSet-YouTube corpus (https://github.com/tensorflow/models/tree/master/research/audioset/yamnet).
+This repo constains code for sound classification (like doorbell detection) under ROS 2 architecture using the YAMNet pretrained deep net that predicts 521 audio event classes based on the AudioSet-YouTube corpus (https://github.com/tensorflow/models/tree/master/research/audioset/yamnet).
 
 ## Installation
 
