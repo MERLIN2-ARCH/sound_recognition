@@ -10,6 +10,7 @@ YAMNet depends on the following Python packages:
 * [`resampy`](http://resampy.readthedocs.io/en/latest/)
 * [`tensorflow`](http://www.tensorflow.org/)
 * [`pysoundfile`](https://pysoundfile.readthedocs.io/)
+* [`librosa`](https://librosa.org/)
 
 ```shell
 $ pip3 install numpy resampy tensorflow soundfile librosa
