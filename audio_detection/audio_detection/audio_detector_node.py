@@ -1,6 +1,7 @@
 import time
 import pyaudio
 import librosa
+import re
 import numpy as np
 
 import audio_detection.params as params
@@ -30,9 +31,9 @@ class AudioDetector(Node):
         self._classes = yamnet_model.class_names(
             'src/yamnet_ros2/audio_detection/audio_detection/yamnet_class_map.csv')
 
-        #started_param_name = "started"
+        # started_param_name = "started"
         self.started = True
-        #self.declare_parameter(started_param_name, True)
+        # self.declare_parameter(started_param_name, True)
 
         # self.started = self.get_parameter(
         # started_param_name).get_parameter_value().bool_value
@@ -48,6 +49,11 @@ class AudioDetector(Node):
 
         if self.started:
             self._start_ad()
+
+    def label_parser(self, label):
+        new_label = re.sub('\s+|,\s+', '_', label.lower())
+        self.get_logger().info(new_label)
+        return new_label
 
     # LISTEN
     def listen_from_mic(self):
@@ -77,8 +83,8 @@ class AudioDetector(Node):
             predictions = np.argsort(prediction)[::-1]
 
             top1 = String()
-            top1.data = self._classes[predictions[0]]
-            #self.get_logger().info("... a "+top1.data)
+            top1.data = self.label_parser(self._classes[predictions[0]])
+            # self.get_logger().info("... a "+top1.data)
 
             # if is a doorbell
             # if top1.data in class_acepted:
