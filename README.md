@@ -13,7 +13,7 @@ YAMNet depends on the following Python packages:
 * [`librosa`](https://librosa.org/)
 
 ```shell
-$ pip3 install numpy resampy tensorflow soundfile librosa
+$ pip3 install numpy resampy tensorflow soundfile librosa PyAudio
 $ cd ~/ros2_ws/src
 $ git clone git@github.com:uleroboticsgroup/simple_node.git
 $ git clone git@github.com:igonzf06/yamnet_ros2.git
