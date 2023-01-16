@@ -1,0 +1,5 @@
+repositories:
+  ThirdParty/simple_node:
+    type: git
+    url: https://github.com/uleroboticsgroup/simple_node
+    version: main
