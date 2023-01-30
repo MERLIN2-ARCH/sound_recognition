@@ -4,15 +4,15 @@ import librosa
 import re
 import numpy as np
 
-import audio_detection.params as params
-import audio_detection.yamnet as yamnet_model
+import sound_recognition.params as params
+import sound_recognition.yamnet as yamnet_model
 
 import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import String
 from std_srvs.srv import Empty
-from audio_detection.custom_thread import CustomThread
+from sound_recognition.custom_thread import CustomThread
 
 class_acepted = ['Doorbell', 'Bell', 'Ding-dong',
                  'Tubular bells', 'Reversing beeps', 'Beep, bleep']
@@ -27,9 +27,9 @@ class AudioDetector(Node):
         self.__listen_thread = None
         self._model = yamnet_model.yamnet_frames_model(params)
         self._model.load_weights(
-            'src/yamnet_ros2/audio_detection/audio_detection/yamnet.h5')
+            'src/sound_recognition/sound_recognition/sound_recognition/yamnet.h5')
         self._classes = yamnet_model.class_names(
-            'src/yamnet_ros2/audio_detection/audio_detection/yamnet_class_map.csv')
+            'src/sound_recognition/sound_recognition/sound_recognition/yamnet_class_map.csv')
 
         # started_param_name = "started"
         self.started = True

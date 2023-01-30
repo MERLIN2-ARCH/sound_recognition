@@ -5,7 +5,7 @@ import rclpy
 from std_srvs.srv import Empty
 from std_msgs.msg import String
 from rclpy.action import ActionServer
-from audio_detection_interfaces.action import Listen
+from sound_recognition_interfaces.action import Listen
 from simple_node import Node
 
 
@@ -56,7 +56,7 @@ class ManagerNode(Node):
         req = Empty.Request()
         self.__start_listening_client.wait_for_service()
         self.__start_listening_client.call(req)
-        self.get_logger().info("starting audio_detection")
+        self.get_logger().info("starting sound_recognition")
 
     def stop_ad(self):
         """ stop ad method """
@@ -64,7 +64,7 @@ class ManagerNode(Node):
         req = Empty.Request()
         self.__stop_listening_client.wait_for_service()
         self.__stop_listening_client.call(req)
-        self.get_logger().info("stopping audio_detection")
+        self.get_logger().info("stopping sound_recognition")
 
     def __execute_server(self, goal_handle) -> Listen.Result:
         """ action server execute callback
@@ -78,7 +78,7 @@ class ManagerNode(Node):
 
         self.doorbell = False
 
-        # starting audio_detection
+        # starting sound_recognition
         self.start_ad()
 
         # wait for message
@@ -86,7 +86,7 @@ class ManagerNode(Node):
             self.get_logger().info("Waiting for doorbell detection.")
             time.sleep(0.5)
 
-        # stoping audio_detection
+        # stoping sound_recognition
         self.stop_ad()
 
         # results

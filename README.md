@@ -27,34 +27,34 @@ $ colcon build
 ### Launch
 
 ```shell
-$ ros2 launch audio_detection audio_detection.launch.py
+$ ros2 launch sound_recognition sound_recognition.launch.py
 ```
 ### Shell example
 
 ```shell
-$ ros2 action send_goal /audio_detection/listen_doorbell audio_detection_interfaces/action/Listen {}
+$ ros2 action send_goal /sound_recognition/listen_doorbell sound_recognition_interfaces/action/Listen {}
 ```
 
 ## Services
 
 * Service to start the doorbell detection:
 
-service: /audio_detection/start_ad_listening
+service: /sound_recognition/start_ad_listening
 
 type: std_srvs/srv/Empty
 
 ```shell
-$ ros2 service call /audio_detection/start_ad_listening std_srvs/srv/Empty
+$ ros2 service call /sound_recognition/start_ad_listening std_srvs/srv/Empty
 ```
 
 * Service to stop the doorbell detection:
 
-service: /audio_detection/stop_ad_listening
+service: /sound_recognition/stop_ad_listening
 
 type: std_srvs/srv/Empty
 
 ```shell
-$ ros2 service call /audio_detection/stop_ad_listening std_srvs/srv/Empty
+$ ros2 service call /sound_recognition/stop_ad_listening std_srvs/srv/Empty
 ```
 
 

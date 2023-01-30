@@ -21,8 +21,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import Model, layers
 
-import audio_detection.features as features_lib
-import audio_detection.params as params
+import sound_recognition.features as features_lib
+import sound_recognition.params as params
 
 
 def _batch_norm(name):

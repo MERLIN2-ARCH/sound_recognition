@@ -5,8 +5,8 @@ from launch.actions import SetEnvironmentVariable
 
 def generate_launch_description():
 
-    pkg_name = "audio_detection"
-    namespace = "audio_detection"
+    pkg_name = "sound_recognition"
+    namespace = "sound_recognition"
 
     stdout_linebuf_envvar = SetEnvironmentVariable(
         "RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED", "1")
@@ -15,7 +15,7 @@ def generate_launch_description():
     # NODES
     #
 
-    audio_detection_node_cmd = Node(
+    sound_recognition_node_cmd = Node(
         package=pkg_name,
         executable="audio_detector_node",
         name="audio_detector_node",
@@ -33,7 +33,7 @@ def generate_launch_description():
 
     ld.add_action(stdout_linebuf_envvar)
 
-    ld.add_action(audio_detection_node_cmd)
+    ld.add_action(sound_recognition_node_cmd)
     ld.add_action(manager_node_cmd)
 
     return ld

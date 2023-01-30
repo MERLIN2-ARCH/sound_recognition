@@ -1,5 +1,5 @@
-audio_detection/test
-audio_detection/.vscode
-audio_detection/audio_detection/__pycache__
-audio_detection/audio_detection/yamnet
+sound_recognition/test
+sound_recognition/.vscode
+sound_recognition/sound_recognition/__pycache__
+sound_recognition/sound_recognition/yamnet
 .vscode/settings.json

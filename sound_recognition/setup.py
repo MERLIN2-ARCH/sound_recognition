@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = 'audio_detection'
+package_name = 'sound_recognition'
 
 setup(
     name=package_name,
@@ -13,7 +13,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join("share", package_name), glob("launch/*.launch.py")),
-        (os.path.join("share", package_name), glob("audio_detection/*.py")),
+        (os.path.join("share", package_name), glob("sound_recognition/*.py")),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -24,8 +24,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "audio_detector_node = audio_detection.audio_detector_node:main",
-            "manager_node = audio_detection.manager_node:main"
+            "audio_detector_node = sound_recognition.audio_detector_node:main",
+            "manager_node = sound_recognition.manager_node:main"
         ],
     },
 )
