@@ -4,6 +4,8 @@ import librosa
 import re
 import numpy as np
 
+from ament_index_python.packages import get_package_share_directory
+
 import sound_recognition.params as params
 import sound_recognition.yamnet as yamnet_model
 
@@ -26,10 +28,8 @@ class SoundRecongnitionNode(Node):
 
         self.__listen_thread = None
         self._model = yamnet_model.yamnet_frames_model(params)
-        self._model.load_weights(
-            'src/sound_recognition/sound_recognition/sound_recognition/yamnet.h5')
-        self._classes = yamnet_model.class_names(
-            'src/sound_recognition/sound_recognition/sound_recognition/yamnet_class_map.csv')
+        self._model.load_weights(get_package_share_directory('sound_recognition') + '/yamnet.h5')
+        self._classes = yamnet_model.class_names(get_package_share_directory('sound_recognition') + '/yamnet_class_map.csv')
 
         # started_param_name = "started"
         self.started = True
