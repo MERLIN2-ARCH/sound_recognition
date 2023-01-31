@@ -17,8 +17,8 @@ def generate_launch_description():
 
     sound_recognition_node_cmd = Node(
         package=pkg_name,
-        executable="audio_detector_node",
-        name="audio_detector_node",
+        executable="sound_recognition_node",
+        name="sound_recognition_node",
         namespace=namespace,
     )
 

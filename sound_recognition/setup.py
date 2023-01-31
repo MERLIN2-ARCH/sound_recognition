@@ -24,7 +24,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "audio_detector_node = sound_recognition.audio_detector_node:main",
+            "sound_recognition_node = sound_recognition.sound_recognition_node:main",
             "manager_node = sound_recognition.manager_node:main"
         ],
     },

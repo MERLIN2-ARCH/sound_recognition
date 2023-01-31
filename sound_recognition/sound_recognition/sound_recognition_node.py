@@ -18,11 +18,11 @@ class_acepted = ['Doorbell', 'Bell', 'Ding-dong',
                  'Tubular bells', 'Reversing beeps', 'Beep, bleep']
 
 
-class AudioDetector(Node):
+class SoundRecongnitionNode(Node):
 
     def __init__(self):
 
-        super().__init__("audio_detector_node")
+        super().__init__("sound_recognition_node")
 
         self.__listen_thread = None
         self._model = yamnet_model.yamnet_frames_model(params)
@@ -39,7 +39,7 @@ class AudioDetector(Node):
         # started_param_name).get_parameter_value().bool_value
 
         # ring publisher
-        self.__pub = self.create_publisher(String, "audio_detected", 10)
+        self.__pub = self.create_publisher(String, "sound_recognition", 10)
 
         # service servers
         self.__start_server = self.create_service(
@@ -176,10 +176,10 @@ class AudioDetector(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    audio_detector = AudioDetector()
-    rclpy.spin(audio_detector)
+    sound_recognition_node = SoundRecongnitionNode()
+    rclpy.spin(sound_recognition_node)
 
-    audio_detector.destroy_node()
+    sound_recognition_node.destroy_node()
     rclpy.shutdown()
 
 

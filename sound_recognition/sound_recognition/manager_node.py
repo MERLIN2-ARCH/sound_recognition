@@ -26,7 +26,7 @@ class ManagerNode(Node):
         # sub
         """ self.__subscription = self.create_subscription(
             String,
-            "audio_detected",
+            "sound_recognition",
             self.__ad_callback,
             10) """
 
@@ -40,7 +40,7 @@ class ManagerNode(Node):
         """ callback
 
         Args:
-            msg (String): audio class detected
+            msg (String): sound class recognized
         """
 
         self.get_logger().info("Manager: " + str(msg.data))
