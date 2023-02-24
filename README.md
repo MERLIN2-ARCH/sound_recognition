@@ -33,7 +33,7 @@ $ ros2 launch sound_recognition sound_recognition.launch.py
 ### Shell example
 
 ```shell
-$ ros2 action send_goal /sound_recognition/listen_doorbell sound_recognition_interfaces/action/Listen {}
+$ ros2 action send_goal /sound_recognition/listen_doorbell sound_recognition_msgs/action/Listen {}
 ```
 
 ## Services

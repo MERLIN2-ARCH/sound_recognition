@@ -5,7 +5,7 @@ import rclpy
 from std_srvs.srv import Empty
 from std_msgs.msg import String
 from rclpy.action import ActionServer
-from sound_recognition_interfaces.action import Listen
+from sound_recognition_msgs.action import Listen
 from simple_node import Node
 
 
