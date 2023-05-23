@@ -48,7 +48,7 @@ class ManagerNode(Node):
 
         if not self.doorbell:
             self.get_logger().info("doorbell")
-            #self.doorbell = True
+            # self.doorbell = True
 
     def start_ad(self):
         """ start ad method """
@@ -82,7 +82,7 @@ class ManagerNode(Node):
         self.start_ad()
 
         # wait for message
-        while(not self.doorbell):
+        while (not self.doorbell):
             self.get_logger().info("Waiting for doorbell detection.")
             time.sleep(0.5)
 
@@ -91,10 +91,6 @@ class ManagerNode(Node):
 
         # results
         result = Listen.Result()
-
-        ''' if self.__action_server.is_canceled():
-            self.__action_server.wait_for_canceling()
-            goal_handle.canceled() '''
 
         # else:
         result.doorbell_detection = self.doorbell
