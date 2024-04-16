@@ -2,17 +2,15 @@
 
 import time
 import rclpy
-from std_srvs.srv import Empty
-from std_msgs.msg import String
-from rclpy.action import ActionServer
-from sound_recognition_msgs.action import Listen
 from simple_node import Node
+from std_srvs.srv import Empty
+from sound_recognition_msgs.action import Listen
 
 
 class ManagerNode(Node):
     """ Manager Node Class """
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("manager_node")
 
         self.doorbell = False
@@ -23,34 +21,14 @@ class ManagerNode(Node):
         self.__stop_listening_client = self.create_client(
             Empty, "stop_ad_listening")
 
-        # sub
-        """ self.__subscription = self.create_subscription(
-            String,
-            "sound_recognition",
-            self.__ad_callback,
-            10) """
-
         # action server
         self.__action_server = self.create_action_server(
             Listen,
             "listen_doorbell",
-            execute_callback=self.__execute_server)
+            execute_callback=self.__execute_server
+        )
 
-    def __ad_callback(self, msg):
-        """ callback
-
-        Args:
-            msg (String): sound class recognized
-        """
-
-        self.get_logger().info("Manager: " + str(msg.data))
-        # self.__pub.publish(msg)
-
-        if not self.doorbell:
-            self.get_logger().info("doorbell")
-            # self.doorbell = True
-
-    def start_ad(self):
+    def start_ad(self) -> None:
         """ start ad method """
 
         req = Empty.Request()
@@ -58,7 +36,7 @@ class ManagerNode(Node):
         self.__start_listening_client.call(req)
         self.get_logger().info("starting sound_recognition")
 
-    def stop_ad(self):
+    def stop_ad(self) -> None:
         """ stop ad method """
 
         req = Empty.Request()
@@ -99,13 +77,10 @@ class ManagerNode(Node):
         return result
 
 
-def main(args=None):
-    rclpy.init(args=args)
-
+def main():
+    rclpy.init()
     node = ManagerNode()
-
     node.join_spin()
-
     rclpy.shutdown()
 
 
