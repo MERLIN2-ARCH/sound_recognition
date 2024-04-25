@@ -20,6 +20,7 @@ import csv
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras import Model, layers
+from tensorflow.keras.layers import Layer
 
 import sound_recognition.features as features_lib
 import sound_recognition.params as params
@@ -37,43 +38,65 @@ def _batch_norm(name):
 
 def _conv(name, kernel, stride, filters):
     def _conv_layer(layer_input):
-        output = layers.Conv2D(name='{}/conv'.format(name),
-                               filters=filters,
+        conv_name = '{}_conv'.format(name)  # Nombre de la capa convolucional
+        bn_name = '{}_bn'.format(name)  # Nombre de la capa de normalización por lotes
+        relu_name = '{}_relu'.format(name)  # Nombre de la capa de activación ReLU
+
+        # Capa convolucional
+        output = layers.Conv2D(filters=filters,
                                kernel_size=kernel,
                                strides=stride,
                                padding=params.CONV_PADDING,
                                use_bias=False,
-                               activation=None)(layer_input)
-        output = _batch_norm(name='{}/conv/bn'.format(name))(output)
-        output = layers.ReLU(name='{}/relu'.format(name))(output)
+                               activation=None,
+                               name=conv_name)(layer_input)
+        # Capa de normalización por lotes
+        output = _batch_norm(name=bn_name)(output)
+        # Capa de activación ReLU
+        output = layers.ReLU(name=relu_name)(output)
         return output
     return _conv_layer
 
 
+
 def _separable_conv(name, kernel, stride, filters):
     def _separable_conv_layer(layer_input):
-        output = layers.DepthwiseConv2D(name='{}/depthwise_conv'.format(name),
-                                        kernel_size=kernel,
-                                        strides=stride,
-                                        depth_multiplier=1,
-                                        padding=params.CONV_PADDING,
-                                        use_bias=False,
-                                        activation=None)(layer_input)
-        output = _batch_norm(name='{}/depthwise_conv/bn'.format(name))(output)
-        output = layers.ReLU(
-            name='{}/depthwise_conv/relu'.format(name))(output)
-        output = layers.Conv2D(name='{}/pointwise_conv'.format(name),
-                               filters=filters,
+        depthwise_conv_name = '{}_depthwise_conv'.format(name)  # Nombre de la capa convolucional profunda
+        depthwise_bn_name = '{}_depthwise_bn'.format(name)  # Nombre de la capa de normalización por lotes de la convolución profunda
+        depthwise_relu_name = '{}_depthwise_relu'.format(name)  # Nombre de la capa de activación ReLU de la convolución profunda
+        pointwise_conv_name = '{}_pointwise_conv'.format(name)  # Nombre de la capa convolucional puntual
+        pointwise_bn_name = '{}_pointwise_bn'.format(name)  # Nombre de la capa de normalización por lotes de la convolución puntual
+        pointwise_relu_name = '{}_pointwise_relu'.format(name)  # Nombre de la capa de activación ReLU de la convolución puntual
+
+        # Capa convolucional profunda
+        output = layers.DepthwiseConv2D(kernel_size=kernel,
+                                         strides=stride,
+                                         depth_multiplier=1,
+                                         padding=params.CONV_PADDING,
+                                         use_bias=False,
+                                         activation=None,
+                                         name=depthwise_conv_name)(layer_input)
+        # Capa de normalización por lotes de la convolución profunda
+        output = _batch_norm(name=depthwise_bn_name)(output)
+        # Capa de activación ReLU de la convolución profunda
+        output = layers.ReLU(name=depthwise_relu_name)(output)
+
+        # Capa convolucional puntual
+        output = layers.Conv2D(filters=filters,
                                kernel_size=(1, 1),
                                strides=1,
                                padding=params.CONV_PADDING,
                                use_bias=False,
-                               activation=None)(output)
-        output = _batch_norm(name='{}/pointwise_conv/bn'.format(name))(output)
-        output = layers.ReLU(
-            name='{}/pointwise_conv/relu'.format(name))(output)
+                               activation=None,
+                               name=pointwise_conv_name)(output)
+        # Capa de normalización por lotes de la convolución puntual
+        output = _batch_norm(name=pointwise_bn_name)(output)
+        # Capa de activación ReLU de la convolución puntual
+        output = layers.ReLU(name=pointwise_relu_name)(output)
         return output
+
     return _separable_conv_layer
+
 
 
 _YAMNET_LAYER_DEFS = [
@@ -109,6 +132,22 @@ def yamnet(features):
         activation=params.CLASSIFIER_ACTIVATION)(logits)
     return predictions
 
+class WaveformToSpectrogram(Layer):
+    def __init__(self, feature_params, **kwargs):
+        super(WaveformToSpectrogram, self).__init__(**kwargs)
+        self.feature_params = feature_params
+
+    def call(self, inputs):
+        return features_lib.waveform_to_log_mel_spectrogram(tf.squeeze(inputs, axis=0), self.feature_params)
+
+class SpectrogramToPatches(Layer):
+    def __init__(self, feature_params, **kwargs):
+        super(SpectrogramToPatches, self).__init__(**kwargs)
+        self.feature_params = feature_params
+
+    def call(self, inputs):
+        return features_lib.spectrogram_to_patches(inputs, self.feature_params)
+
 
 def yamnet_frames_model(feature_params):
     """Defines the YAMNet waveform-to-class-scores model.
@@ -125,12 +164,14 @@ def yamnet_frames_model(feature_params):
     """
     waveform = layers.Input(batch_shape=(1, None))
     # Store the intermediate spectrogram features to use in visualization.
-    spectrogram = features_lib.waveform_to_log_mel_spectrogram(
-        tf.squeeze(waveform, axis=0), feature_params)
-    patches = features_lib.spectrogram_to_patches(spectrogram, feature_params)
+    # spectrogram = features_lib.waveform_to_log_mel_spectrogram(
+    #     tf.squeeze(waveform, axis=0), feature_params)
+    spectrogram = WaveformToSpectrogram(feature_params)(waveform)
+    patches = SpectrogramToPatches(feature_params)(spectrogram)
     predictions = yamnet(patches)
     frames_model = Model(name='yamnet_frames',
                          inputs=waveform, outputs=[predictions, spectrogram])
+
     return frames_model
 
 
