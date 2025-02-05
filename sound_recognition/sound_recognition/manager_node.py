@@ -8,7 +8,7 @@ from sound_recognition_msgs.action import Listen
 
 
 class ManagerNode(Node):
-    """ Manager Node Class """
+    """Manager Node Class"""
 
     def __init__(self) -> None:
         super().__init__("manager_node")
@@ -16,20 +16,16 @@ class ManagerNode(Node):
         self.doorbell = False
 
         # service clients
-        self.__start_listening_client = self.create_client(
-            Empty, "start_ad_listening")
-        self.__stop_listening_client = self.create_client(
-            Empty, "stop_ad_listening")
+        self.__start_listening_client = self.create_client(Empty, "start_ad_listening")
+        self.__stop_listening_client = self.create_client(Empty, "stop_ad_listening")
 
         # action server
         self.__action_server = self.create_action_server(
-            Listen,
-            "listen_doorbell",
-            execute_callback=self.__execute_server
+            Listen, "listen_doorbell", execute_callback=self.__execute_server
         )
 
     def start_ad(self) -> None:
-        """ start ad method """
+        """start ad method"""
 
         req = Empty.Request()
         self.__start_listening_client.wait_for_service()
@@ -37,7 +33,7 @@ class ManagerNode(Node):
         self.get_logger().info("starting sound_recognition")
 
     def stop_ad(self) -> None:
-        """ stop ad method """
+        """stop ad method"""
 
         req = Empty.Request()
         self.__stop_listening_client.wait_for_service()
@@ -45,7 +41,7 @@ class ManagerNode(Node):
         self.get_logger().info("stopping sound_recognition")
 
     def __execute_server(self, goal_handle) -> Listen.Result:
-        """ action server execute callback
+        """action server execute callback
 
         Args:
             goal_handle ([type]): goal_handle
@@ -60,7 +56,7 @@ class ManagerNode(Node):
         self.start_ad()
 
         # wait for message
-        while (not self.doorbell):
+        while not self.doorbell:
             self.get_logger().info("Waiting for doorbell detection.")
             time.sleep(0.5)
 

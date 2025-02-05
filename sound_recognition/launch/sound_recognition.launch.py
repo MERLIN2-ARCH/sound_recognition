@@ -9,12 +9,12 @@ def generate_launch_description():
     namespace = "sound_recognition"
 
     stdout_linebuf_envvar = SetEnvironmentVariable(
-        "RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED", "1")
+        "RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED", "1"
+    )
 
     #
     # NODES
     #
-
     sound_recognition_node_cmd = Node(
         package=pkg_name,
         executable="sound_recognition_node",
